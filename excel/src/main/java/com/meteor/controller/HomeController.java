@@ -16,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.meteor.model.Worker;
+
 /**
  * Handles requests for the application home page.
  */
@@ -70,21 +72,30 @@ public class HomeController {
 	public String exceldown(Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		
-		List<String> list = new ArrayList<String>();
+		List<Object> list = new ArrayList<Object>();
+		
+		Worker worker1 = new Worker();
+		worker1.setUserName("홍길동");
+		worker1.setDept("SM");
+		worker1.setJob("엔지니어");
+		worker1.setAge(10);
+		
+		Worker worker2 = new Worker();
+		worker2.setUserName("파비앙");
+		worker2.setDept("AM");
+		worker2.setJob("엔지니어");
+		worker2.setAge(20);
 		
 		
-		list.add("홍길동");
-		list.add("ss");
-		list.add("SM");
+		Worker worker3 = new Worker();
+		worker3.setUserName("민교");
+		worker3.setDept("SM");
+		worker3.setJob("개발");
+		worker3.setAge(30);
+		list.add(worker1);
+		list.add(worker2);
+		list.add(worker3);
 		
-		list.add("파비앙");
-		list.add("ll");
-		list.add("AM");
-		
-		list.add("철수");
-		list.add("아이크래프트");
-		list.add("AM");
-		  
 		  model.addAttribute("menuList", list);
 		  
 		return "excelDownload";

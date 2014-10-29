@@ -12,8 +12,11 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
+
+import com.meteor.model.Worker;
 
 @Service("excelDownload")
 public class Excel_View extends AbstractExcelView{
@@ -44,9 +47,10 @@ public class Excel_View extends AbstractExcelView{
 		  
 		  createColumnLabel( sheet, column_list );
 		  
-		  List<String> menuList = (List<String>)model.get("menuList");
+		  List<Worker> menuList = (List<Worker>)model.get("menuList");
 		  for(int i=0; i <= menuList.size()-1; i++){
-		   createPageRow(sheet, menuList, i);
+		   createPageRow(sheet, menuList.get(i), i);
+		   
 		  }
 		
 	}
@@ -95,17 +99,19 @@ public class Excel_View extends AbstractExcelView{
 	  * @param menuList
 	  * @param rowNum
 	  */
-	 private void createPageRow(HSSFSheet sheet, List<String> menuList, int rowNum){
+	 private void createPageRow(HSSFSheet sheet, Worker worker, int rowNum){
 	  HSSFRow row = sheet.createRow(rowNum + 1);
 	  
 	  //HSSFCell cell = row.createCell(0);
 	  HSSFCell cell = null;
-	  
-	 
-
-	  for(int idx=0; idx < menuList.size(); idx++){
+	 	  for(int idx=0; idx < worker.Var_Size; idx++){
 		  cell = row.createCell( idx );
-		  cell.setCellValue( menuList.get( idx ) );
+		  
+		  if(idx==3){
+			  cell.setCellValue( Double.valueOf( String.valueOf( worker.get( idx ) ) ) );
+		  }else{
+			  cell.setCellValue( String.valueOf( worker.get( idx ) ) );  
+		  }
 	  }
 	  //cell = row.createCell(1);
 	   
