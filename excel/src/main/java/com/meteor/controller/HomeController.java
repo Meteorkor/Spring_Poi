@@ -69,13 +69,24 @@ public class HomeController {
 	@RequestMapping(value = "/exceldown", method = RequestMethod.GET)
 	public String exceldown(Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) {
 		
+		
 		List<String> list = new ArrayList<String>();
-		  list.add("사이트 관리");
-		  list.add("관리자 관리");
-		  list.add("공통 코드 관리");
-		  list.add("접속 이력");
+		
+		
+		list.add("홍길동");
+		list.add("ss");
+		list.add("SM");
+		
+		list.add("파비앙");
+		list.add("ll");
+		list.add("AM");
+		
+		list.add("철수");
+		list.add("아이크래프트");
+		list.add("AM");
 		  
 		  model.addAttribute("menuList", list);
+		  
 		return "excelDownload";
 	}
 	
