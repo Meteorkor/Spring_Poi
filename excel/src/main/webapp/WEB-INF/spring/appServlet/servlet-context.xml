@@ -28,6 +28,7 @@
 	</beans:bean>
 	 
 	<context:component-scan base-package="com.meteor.controller" />
+	<context:component-scan base-package="com.meteor.model" />
 	
 	 <beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<beans:property name="order" value="0" />

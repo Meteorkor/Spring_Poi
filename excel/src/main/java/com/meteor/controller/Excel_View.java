@@ -12,7 +12,6 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.RichTextString;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
@@ -104,14 +103,17 @@ public class Excel_View extends AbstractExcelView{
 	  
 	  //HSSFCell cell = row.createCell(0);
 	  HSSFCell cell = null;
-	 	  for(int idx=0; idx < worker.Var_Size; idx++){
+	 
+	  for(int idx=0; idx < worker.Var_Size; idx++){
 		  cell = row.createCell( idx );
 		  
-		  if(idx==3){
+		  
+		  if( worker.get(idx) instanceof Double ){//Double 형이면
 			  cell.setCellValue( Double.valueOf( String.valueOf( worker.get( idx ) ) ) );
 		  }else{
-			  cell.setCellValue( String.valueOf( worker.get( idx ) ) );  
+			  cell.setCellValue( String.valueOf( worker.get( idx ) ) );
 		  }
+
 	  }
 	  //cell = row.createCell(1);
 	   

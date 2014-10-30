@@ -16,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.meteor.model.Poi_model_interface;
+import com.meteor.model.Test_impl;
 import com.meteor.model.Worker;
 
 /**
@@ -65,6 +67,12 @@ public class HomeController {
 		response.setHeader("Content-Description", "JSP Generated Data"); 
 		*/
 		
+		Poi_model_interface poi = new Test_impl();
+		
+		for( String col : poi.get_Column_Name_List() ){
+			System.out.println( "col : " + col );	
+		}
+		
 		return "home";
 	}
 	
@@ -78,7 +86,7 @@ public class HomeController {
 		worker1.setUserName("홍길동");
 		worker1.setDept("SM");
 		worker1.setJob("엔지니어");
-		worker1.setAge(10);
+		worker1.setAge(10.22);
 		
 		Worker worker2 = new Worker();
 		worker2.setUserName("파비앙");
@@ -91,7 +99,7 @@ public class HomeController {
 		worker3.setUserName("민교");
 		worker3.setDept("SM");
 		worker3.setJob("개발");
-		worker3.setAge(30);
+		worker3.setAge(30.1);
 		list.add(worker1);
 		list.add(worker2);
 		list.add(worker3);

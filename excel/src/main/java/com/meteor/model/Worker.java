@@ -1,11 +1,12 @@
 package com.meteor.model;
 
+
 public class Worker {
 
 	String UserName;
 	String Dept;
 	String Job;
-	int age;
+	double age;
 	public final int Var_Size = 4;//변수 수
 	
 	public Object get(int idx){
@@ -34,11 +35,11 @@ public class Worker {
 		Job = job;
 	}
 
-	public int getAge() {
+	public double getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(double age) {
 		this.age = age;
 	}
 	
