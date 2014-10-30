@@ -17,42 +17,52 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.meteor.model.Worker;
 
+/**
+ * 엑셀 파일을 생성
+ * @author kimunseok
+ *
+ */
 @Service("excelDownload")
 public class Excel_View extends AbstractExcelView{
 
+	
 	@Override
+	/**
+	 * 뷰에서 호출
+	 * 
+	 */
 	protected void buildExcelDocument(Map<String, Object> model,
 			HSSFWorkbook workbook, HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
-
+		
 		  String userAgent = req.getHeader("User-Agent");
-		  String fileName = "test.xls";
+		  String fileName = (String)model.get("excel_file_name");//엑셀 파일 명
 		  
 		  if(userAgent.indexOf("MSIE") > -1){
-		   fileName = URLEncoder.encode(fileName, "utf-8");
+			  fileName = URLEncoder.encode(fileName, "utf-8");
 		  }else{
-		   fileName = new String(fileName.getBytes("utf-8"), "iso-8859-1");
+			  fileName = new String(fileName.getBytes("utf-8"), "iso-8859-1");
 		  }
-		  
 		  res.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
 		  res.setHeader("Content-Transfer-Encoding", "binary");
 		    
-		  HSSFSheet sheet = createFirstSheet(workbook);
+		  HSSFSheet sheet = createFirstSheet(workbook);//시트 생성
 		  
-		  ArrayList<String> column_list = new ArrayList<String>();
-		  column_list.add("이름");
-		  column_list.add("회사");
-		  column_list.add("직급");
-		  
+		  ArrayList<String> column_list = (ArrayList<String>)model.get("ColumnList");//컬럼 리스트
 		  createColumnLabel( sheet, column_list );
 		  
-		  List<Worker> menuList = (List<Worker>)model.get("menuList");
-		  for(int i=0; i <= menuList.size()-1; i++){
-		   createPageRow(sheet, menuList.get(i), i);
-		   
+		  List<Worker> menuList = (List<Worker>)model.get("DataList");//데이터 리스트
+		  for (int i = 0; i < menuList.size(); i++) {
+			createPageRow(sheet, menuList.get(i), i);
+
+		}
+		  
+		  for (int i = 0; i < column_list.size(); i++) {//컬럼을 데이터에 따라 동적으로
+			  set_autoSizeColumn(sheet, i);  
 		  }
+		  
 		
-	}
+	}////
 
 	/**
 	 * Sheet 생성
@@ -64,6 +74,12 @@ public class Excel_View extends AbstractExcelView{
 	  workbook.setSheetName(0, "테스트");//시트 이름 지정
 	  
 	  sheet.setColumnWidth(1, 256*30);
+	  
+	  //sheet.autoSizeColumn(0);
+	  //sheet. setColumnWidth(0 , sheet.getColumnWidth(0) + 512);
+	  
+	  //sheet.autoSizeColumn(1);
+	  
 	  //sheet.setColumnWidth(1, 256*254);//컬럼 사이즈 지정
 	  
 	  return sheet;
@@ -117,6 +133,14 @@ public class Excel_View extends AbstractExcelView{
 	  }
 	  //cell = row.createCell(1);
 	   
+	 }
+	 /**
+	  * 컬럼 넓이를 넣은 값에 맞게 변경
+	  * @param sheet
+	  * @param colNum
+	  */
+	 private void set_autoSizeColumn(HSSFSheet sheet, int colNum){
+		 sheet.autoSizeColumn( colNum ); 
 	 }
 	 
 }

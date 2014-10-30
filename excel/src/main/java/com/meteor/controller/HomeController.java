@@ -79,11 +79,16 @@ public class HomeController {
 	@RequestMapping(value = "/exceldown", method = RequestMethod.GET)
 	public String exceldown(Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) {
 		
+		 ArrayList<String> ColumnList = new ArrayList<String>();
+		  ColumnList.add("이름");
+		  ColumnList.add("회사");
+		  ColumnList.add("직급");//샘플로 여기서 만듬
 		
-		List<Object> list = new ArrayList<Object>();
+		
+		List<Object> DataList = new ArrayList<Object>();
 		
 		Worker worker1 = new Worker();
-		worker1.setUserName("홍길동");
+		worker1.setUserName("홍길동123123123123123123123123123");
 		worker1.setDept("SM");
 		worker1.setJob("엔지니어");
 		worker1.setAge(10.22);
@@ -98,13 +103,16 @@ public class HomeController {
 		Worker worker3 = new Worker();
 		worker3.setUserName("민교");
 		worker3.setDept("SM");
-		worker3.setJob("개발");
+		worker3.setJob("개발123123123123123123123123123123");
 		worker3.setAge(30.1);
-		list.add(worker1);
-		list.add(worker2);
-		list.add(worker3);
+		DataList.add(worker1);
+		DataList.add(worker2);
+		DataList.add(worker3);
 		
-		  model.addAttribute("menuList", list);
+		
+		model.addAttribute("ColumnList", ColumnList);
+		  model.addAttribute("DataList", DataList);
+		  model.addAttribute("excel_file_name", "sample");
 		  
 		return "excelDownload";
 	}
