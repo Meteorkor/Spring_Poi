@@ -2,6 +2,8 @@ package com.meteor.poi;
 
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Workbook;
+
 /**
  * 
  * @author kimunseok
@@ -11,6 +13,9 @@ public abstract class Poi_sheet_model {
 
 	protected List<String> Column_Name_List = null;
 	protected List<Poi_Row_Interface> Row_List = null;
+	
+	protected Workbook wb = null;
+	
 	
 	/**
 	 * 데이터 삽입
@@ -81,6 +86,14 @@ public abstract class Poi_sheet_model {
 	 */
 	public List<String> get_Column_Name_List(){
 		return this.Column_Name_List;
+	}
+
+	public Workbook getWb() {
+		return wb;
+	}
+
+	public void setWb(Workbook wb) {
+		this.wb = wb;
 	}
 	
 }

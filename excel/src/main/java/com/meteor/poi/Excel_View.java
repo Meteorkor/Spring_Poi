@@ -11,6 +11,8 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
@@ -57,6 +59,9 @@ public class Excel_View extends AbstractExcelView{
 		  
 		  Poi_sheet_model poi_model = (Poi_sheet_model)model.get( Poi_Model );//Poi Model
 		  
+		  poi_model.setWb( workbook );
+		  
+		  
 		  List<String> column_list =  poi_model.get_Column_Name_List();//컬럼 리스트
 		  createColumnLabel( sheet, poi_model );
 		  
@@ -79,14 +84,12 @@ public class Excel_View extends AbstractExcelView{
 	 * @param workbook
 	 * @return
 	 */
-	 private HSSFSheet createFirstSheet(HSSFWorkbook workbook){
-	  HSSFSheet sheet = workbook.createSheet();
-	  workbook.setSheetName(0, "테스트");//시트 이름 지정
-	  
-	  //sheet.setColumnWidth(1, 256*30);
-	  
-	  return sheet;
-	 }
+	private HSSFSheet createFirstSheet(HSSFWorkbook workbook) {
+		HSSFSheet sheet = workbook.createSheet();
+		workbook.setSheetName(0, "테스트");// 시트 이름 지정
+
+		return sheet;
+	}
 
 	 /**
 	  * 엑셀 헤더 생성( th )
@@ -100,13 +103,23 @@ public class Excel_View extends AbstractExcelView{
 		HSSFRow firstRow = sheet.createRow(0);
 		HSSFCell cell = null;
 
+		CellStyle style = poi_sheet_model.getWb().createCellStyle();
+		
+		style.setAlignment( CellStyle.ALIGN_CENTER );
+		style.setBorderTop( (short)2 );
+		style.setBorderRight( (short)2 );
+		style.setBorderBottom( (short)2 );
+		style.setBorderLeft( (short)2 );
+		style.setFillForegroundColor( IndexedColors.RED.getIndex() );
+		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		
+		
 		for (int idx = 0; idx < column_names.size(); idx++) {
 			cell = firstRow.createCell(idx);
 			cell.setCellValue(column_names.get(idx));
-			//cell.getCellStyle().setFont( new F );
-			
+			cell.setCellStyle(style);
 		}
-
+		
 	}
 	 
 	 /**
