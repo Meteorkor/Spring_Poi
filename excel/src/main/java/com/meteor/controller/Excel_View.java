@@ -15,7 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
-import com.meteor.model.Worker;
+import com.meteor.model.Poi_Row_Interface;
 
 /**
  * 엑셀 파일을 생성
@@ -25,6 +25,10 @@ import com.meteor.model.Worker;
 @Service("excelDownload")
 public class Excel_View extends AbstractExcelView{
 
+	final static String ColumnList = "ColumnList"; 
+	final static String DataList = "DataList";
+	final static String Excel_File_name = "Excel_File_name";
+	
 	
 	@Override
 	/**
@@ -36,22 +40,22 @@ public class Excel_View extends AbstractExcelView{
 			throws Exception {
 		
 		  String userAgent = req.getHeader("User-Agent");
-		  String fileName = (String)model.get("excel_file_name");//엑셀 파일 명
+		  String fileName = (String)model.get( Excel_File_name );//엑셀 파일 명
 		  
 		  if(userAgent.indexOf("MSIE") > -1){
 			  fileName = URLEncoder.encode(fileName, "utf-8");
 		  }else{
 			  fileName = new String(fileName.getBytes("utf-8"), "iso-8859-1");
 		  }
-		  res.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
+		  res.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + ".xls\";");
 		  res.setHeader("Content-Transfer-Encoding", "binary");
 		    
 		  HSSFSheet sheet = createFirstSheet(workbook);//시트 생성
 		  
-		  ArrayList<String> column_list = (ArrayList<String>)model.get("ColumnList");//컬럼 리스트
+		  ArrayList<String> column_list = (ArrayList<String>)model.get( ColumnList );//컬럼 리스트
 		  createColumnLabel( sheet, column_list );
 		  
-		  List<Worker> menuList = (List<Worker>)model.get("DataList");//데이터 리스트
+		  List<Poi_Row_Interface> menuList = (List<Poi_Row_Interface>)model.get( DataList );//데이터 리스트
 		  for (int i = 0; i < menuList.size(); i++) {
 			createPageRow(sheet, menuList.get(i), i);
 
@@ -73,14 +77,7 @@ public class Excel_View extends AbstractExcelView{
 	  HSSFSheet sheet = workbook.createSheet();
 	  workbook.setSheetName(0, "테스트");//시트 이름 지정
 	  
-	  sheet.setColumnWidth(1, 256*30);
-	  
-	  //sheet.autoSizeColumn(0);
-	  //sheet. setColumnWidth(0 , sheet.getColumnWidth(0) + 512);
-	  
-	  //sheet.autoSizeColumn(1);
-	  
-	  //sheet.setColumnWidth(1, 256*254);//컬럼 사이즈 지정
+	  //sheet.setColumnWidth(1, 256*30);
 	  
 	  return sheet;
 	 }
@@ -91,6 +88,8 @@ public class Excel_View extends AbstractExcelView{
 	  */
 	 private void createColumnLabel(HSSFSheet sheet, List<String> column_names ){
 	  HSSFRow firstRow = sheet.createRow(0);
+	  
+	  
 	  
 	  //HSSFCell cell = firstRow.createCell(0);
 	  HSSFCell cell = null;
@@ -114,24 +113,26 @@ public class Excel_View extends AbstractExcelView{
 	  * @param menuList
 	  * @param rowNum
 	  */
-	 private void createPageRow(HSSFSheet sheet, Worker worker, int rowNum){
+	 private void createPageRow(HSSFSheet sheet, Poi_Row_Interface row_data, int rowNum){
 	  HSSFRow row = sheet.createRow(rowNum + 1);
 	  
 	  //HSSFCell cell = row.createCell(0);
 	  HSSFCell cell = null;
 	 
-	  for(int idx=0; idx < worker.Var_Size; idx++){
+	  for(int idx=0; idx < row_data.size(); idx++){
 		  cell = row.createCell( idx );
 		  
 		  
-		  if( worker.get(idx) instanceof Double ){//Double 형이면
-			  cell.setCellValue( Double.valueOf( String.valueOf( worker.get( idx ) ) ) );
+		  if( row_data.get(idx) instanceof Double ){//Double 형이면
+			  cell.setCellValue( Double.valueOf( String.valueOf( row_data.get( idx ) ) ) );
+		  }else if( row_data.get(idx) instanceof Integer ){//Double 형이면
+			  cell.setCellValue( Integer.valueOf( String.valueOf( row_data.get( idx ) ) ) );
 		  }else{
-			  cell.setCellValue( String.valueOf( worker.get( idx ) ) );
+			  cell.setCellValue( String.valueOf( row_data.get( idx ) ) );
 		  }
 
-	  }
-	  //cell = row.createCell(1);
+	  }//end for
+
 	   
 	 }
 	 /**

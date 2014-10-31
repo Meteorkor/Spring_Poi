@@ -1,6 +1,10 @@
 package com.meteor.model;
 
-
+/**
+ * 2014-10-31 예제 model(안쓸꺼)
+ * @author kimunseok
+ *
+ */
 public class Worker {
 
 	String UserName;

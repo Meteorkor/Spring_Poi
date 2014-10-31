@@ -16,7 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.meteor.model.Poi_model_interface;
+import com.meteor.model.Poi_Row_Interface;
+import com.meteor.model.Poi_Worker_Row;
+import com.meteor.model.Poi_ab_sheet_model;
 import com.meteor.model.Test_impl;
 import com.meteor.model.Worker;
 
@@ -61,17 +63,6 @@ public class HomeController {
 		stb.append("</table>");
 		
 		model.addAttribute("test_table", stb.toString() );
-		logger.info("test");
-		/*
-		response.setHeader("Content-Disposition", "attachment; filename=excel.xls");
-		response.setHeader("Content-Description", "JSP Generated Data"); 
-		*/
-		
-		Poi_model_interface poi = new Test_impl();
-		
-		for( String col : poi.get_Column_Name_List() ){
-			System.out.println( "col : " + col );	
-		}
 		
 		return "home";
 	}
@@ -105,17 +96,42 @@ public class HomeController {
 		worker3.setDept("SM");
 		worker3.setJob("개발123123123123123123123123123123");
 		worker3.setAge(30.1);
+		
 		DataList.add(worker1);
 		DataList.add(worker2);
 		DataList.add(worker3);
 		
 		
 		model.addAttribute("ColumnList", ColumnList);
-		  model.addAttribute("DataList", DataList);
-		  model.addAttribute("excel_file_name", "sample");
+		model.addAttribute("DataList", DataList);
+		model.addAttribute("excel_file_name", "sample");
 		  
 		return "excelDownload";
 	}
+	
+	
+	@RequestMapping(value = "/exceltest", method = RequestMethod.GET)
+	public String excel_test(Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+	Poi_Worker_Row woker = new Poi_Worker_Row();
+	woker.setName("kim");
+	woker.setDept("부서");
+	woker.setAge( 10 );
+	
+	ArrayList<Poi_Row_Interface> poi_row_list = new ArrayList<Poi_Row_Interface>();
+	poi_row_list.add(woker);
+
+		Poi_ab_sheet_model poi_model = new Test_impl(poi_row_list);
+		
+		model.addAttribute( Excel_View.ColumnList , poi_model.get_Column_Name_List());
+		model.addAttribute( Excel_View.DataList , poi_model.get_Row_List() );
+		model.addAttribute( Excel_View.Excel_File_name , "sample");
+		  
+		
+		
+		return "excelDownload";
+	}
+	//////////
 	
 		
 }

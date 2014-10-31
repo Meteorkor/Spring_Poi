@@ -1,26 +1,31 @@
 package com.meteor.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Test_impl extends Poi_model_interface{
 
-	//Data는 다른곳에서 상속 받아도..
-	String Name;
-	Double Age;
-	String Location;
-	
-	
+public class Test_impl extends Poi_ab_sheet_model{
+
 	public Test_impl() {
+		
+	}
+	
+	public Test_impl(List<Poi_Row_Interface> row_Inter_Row) {
+		super(row_Inter_Row);
+		
+		this.set_Column_Name_List( this.create_column_list() );
+		
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	public List<String> create_column_list(){
 		ArrayList<String> column_name = new ArrayList<String>();
 		column_name.add("이름");
 		column_name.add("나이");
 		column_name.add("사는곳");
-		this.set_Column_Name_List(column_name);
 		
-		ArrayList<Object> Data_name = new ArrayList<Object>();
-		Data_name.add( this.Name );
-		Data_name.add( this.Age );
-		Data_name.add( this.Location );
+		return  column_name;
 	}
 	
 }

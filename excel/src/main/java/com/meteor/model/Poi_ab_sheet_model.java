@@ -2,20 +2,41 @@ package com.meteor.model;
 
 import java.util.List;
 
-//public abstract class Poi_model_interface {
-public abstract class Poi_model_interface {
+/**
+ * 
+ * @author kimunseok
+ *
+ */
+public abstract class Poi_ab_sheet_model {
 
 	protected List<String> Column_Name_List = null;
-	protected List<Object> Data_List = null;
+	protected List<Poi_Row_Interface> Row_List = null;
+	
+	/**
+	 * 데이터 삽입
+	 * @param row_Inter_Row
+	 */
+	public Poi_ab_sheet_model( List<Poi_Row_Interface> row_Inter_Row ) {
+		this.set_Row_List( row_Inter_Row );
+	}
+	
+	public Poi_ab_sheet_model(  ) {
+		
+	}
+	
 	
 	/**
 	 * 각각 Data를 반환
 	 * @param idx
 	 * @return
 	 */
-	public Object get_Data(int idx){
+	public Poi_Row_Interface get_Row(int idx){
 		
-		return this.Data_List.get(idx); 
+		return this.Row_List.get(idx); 
+	}
+	public Object get_cell(int row_idx, int cell_idx){
+		
+		return this.Row_List.get(row_idx).get(cell_idx);
 	}
 	/**
 	 * 각각 컬럼 반환
@@ -30,8 +51,8 @@ public abstract class Poi_model_interface {
 	 * Data 리스트 반환
 	 * @return
 	 */
-	public List<Object> get_Data_List(){
-		return this.Data_List;
+	public List<Poi_Row_Interface> get_Row_List(){
+		return this.Row_List;
 	}
 	/**
 	 * Data 리스트 설정
@@ -39,10 +60,10 @@ public abstract class Poi_model_interface {
 	 * @return
 	 */
 	
-	protected List<Object> set_Data_List(List<Object> lst){
-		this.Data_List = lst;
+	protected List<Poi_Row_Interface> set_Row_List(List<Poi_Row_Interface> lst){
+		this.Row_List = lst;
 		
-		return this.Data_List;
+		return this.Row_List;
 	}
 	/**
 	 * Column 리스트 설정
