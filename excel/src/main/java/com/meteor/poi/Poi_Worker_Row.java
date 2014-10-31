@@ -1,4 +1,4 @@
-package com.meteor.model;
+package com.meteor.poi;
 
 /**
  * Poi_Row_Interface 예제 구현체

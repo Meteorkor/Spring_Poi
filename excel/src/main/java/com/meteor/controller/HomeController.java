@@ -16,11 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.meteor.model.Poi_Row_Interface;
-import com.meteor.model.Poi_Worker_Row;
-import com.meteor.model.Poi_ab_sheet_model;
-import com.meteor.model.Test_impl;
 import com.meteor.model.Worker;
+import com.meteor.poi.Excel_View;
+import com.meteor.poi.Poi_Row_Interface;
+import com.meteor.poi.Poi_Worker_Row;
+import com.meteor.poi.Poi_sheet_model;
+import com.meteor.poi.Test_impl;
 
 /**
  * Handles requests for the application home page.
@@ -121,10 +122,10 @@ public class HomeController {
 	ArrayList<Poi_Row_Interface> poi_row_list = new ArrayList<Poi_Row_Interface>();
 	poi_row_list.add(woker);
 
-		Poi_ab_sheet_model poi_model = new Test_impl(poi_row_list);
+		Poi_sheet_model poi_model = new Test_impl(poi_row_list);
 		
-		model.addAttribute( Excel_View.ColumnList , poi_model.get_Column_Name_List());
-		model.addAttribute( Excel_View.DataList , poi_model.get_Row_List() );
+		model.addAttribute( Excel_View.Poi_Model , poi_model );
+		
 		model.addAttribute( Excel_View.Excel_File_name , "sample");
 		  
 		

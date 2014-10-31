@@ -1,4 +1,4 @@
-package com.meteor.model;
+package com.meteor.poi;
 
 /**
  * Poi Row Interface

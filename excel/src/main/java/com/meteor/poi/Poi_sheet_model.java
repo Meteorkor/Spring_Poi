@@ -1,4 +1,4 @@
-package com.meteor.model;
+package com.meteor.poi;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import java.util.List;
  * @author kimunseok
  *
  */
-public abstract class Poi_ab_sheet_model {
+public abstract class Poi_sheet_model {
 
 	protected List<String> Column_Name_List = null;
 	protected List<Poi_Row_Interface> Row_List = null;
@@ -16,11 +16,11 @@ public abstract class Poi_ab_sheet_model {
 	 * 데이터 삽입
 	 * @param row_Inter_Row
 	 */
-	public Poi_ab_sheet_model( List<Poi_Row_Interface> row_Inter_Row ) {
+	public Poi_sheet_model( List<Poi_Row_Interface> row_Inter_Row ) {
 		this.set_Row_List( row_Inter_Row );
 	}
 	
-	public Poi_ab_sheet_model(  ) {
+	public Poi_sheet_model(  ) {
 		
 	}
 	

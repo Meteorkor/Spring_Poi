@@ -1,10 +1,10 @@
-package com.meteor.model;
+package com.meteor.poi;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Test_impl extends Poi_ab_sheet_model{
+public class Test_impl extends Poi_sheet_model{
 
 	public Test_impl() {
 		
